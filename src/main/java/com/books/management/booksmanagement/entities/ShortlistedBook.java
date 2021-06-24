@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(name = "shortlisted_books")
-public class ShortlistedBook {
+public final class ShortlistedBook {
 
     @Id
     @Column(name = "shortlisted_id")
@@ -36,23 +36,12 @@ public class ShortlistedBook {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getBookId() {
         return bookId;
-    }
-
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
     }
 
     public long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
 }
