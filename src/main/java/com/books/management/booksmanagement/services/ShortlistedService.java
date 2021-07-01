@@ -17,4 +17,8 @@ public class ShortlistedService {
         final ShortlistDetails saveShortlistDetails = new ShortlistDetails(userId, bookId);
         shortlistedRepository.save(saveShortlistDetails);
     }
+
+    public void removeFromShortlist(Long shortlistedId) {
+        shortlistedRepository.deleteById(shortlistedId);
+    }
 }

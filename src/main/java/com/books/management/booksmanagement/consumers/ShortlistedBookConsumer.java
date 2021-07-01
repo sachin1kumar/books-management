@@ -12,9 +12,15 @@ public class ShortlistedBookConsumer {
     @Autowired
     private ShortlistedService shortlistedService;
 
-    @RabbitListener(queues = "${spring.rabbitmq.queue}")
+    @RabbitListener(queues = "${spring.rabbitmq.addShortListedQueue}")
     public void consumeShortlistedDetails(ShortlistDetails shortlistDetails) {
         System.out.println("Message receive from queue: " + shortlistDetails);
         shortlistedService.addToShortlist(shortlistDetails);
+    }
+
+    @RabbitListener(queues = "${spring.rabbitmq.removeShortListedQueue}")
+    public void removeShortlistedBook(Long shortListedId) {
+        System.out.println("Message receive from queue: " + shortListedId);
+        shortlistedService.removeFromShortlist(shortListedId);
     }
 }
