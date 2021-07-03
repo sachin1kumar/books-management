@@ -39,3 +39,9 @@ eureka:
 
 server:
   port: 8084
+
+
+
+logging:
+  file:
+    name: /Users/Sachin/Desktop/microservice.log
