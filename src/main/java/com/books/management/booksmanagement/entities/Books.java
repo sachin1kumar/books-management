@@ -12,7 +12,7 @@ public final class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
-    private Long BookId;
+    private Long bookId;
 
     @Column(name = "title_id")
     private Long titleId;
@@ -29,8 +29,20 @@ public final class Books {
     @Column(name = "price")
     private Double price;
 
+    protected Books() {
+
+    }
+    public Books(Long bookId, Long titleId, Long authorId, Long publisherId, String description, Double price) {
+        this.bookId = bookId;
+        this.titleId = titleId;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
+        this.description = description;
+        this.price = price;
+    }
+
     public Long getBookId() {
-        return BookId;
+        return bookId;
     }
 
     public Long getTitleId() {
