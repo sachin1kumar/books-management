@@ -1,4 +1,4 @@
-package com.books.management.booksmanagement.unittests;
+package com.books.management.booksmanagement.unittests.services;
 
 import com.books.management.booksmanagement.entities.Books;
 import com.books.management.booksmanagement.entities.ShortlistDetails;
