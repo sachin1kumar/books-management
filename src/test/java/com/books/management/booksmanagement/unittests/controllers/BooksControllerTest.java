@@ -2,6 +2,7 @@ package com.books.management.booksmanagement.unittests.controllers;
 
 import com.books.management.booksmanagement.controllers.BooksController;
 import com.books.management.booksmanagement.entities.Books;
+import com.books.management.booksmanagement.entities.ShortlistDetails;
 import com.books.management.booksmanagement.services.BooksService;
 import com.books.management.booksmanagement.services.ShortlistedService;
 import org.junit.Test;
@@ -40,12 +41,12 @@ public class BooksControllerTest {
     @Test
     public void getAllBooksTest() throws Exception {
         when(booksService.getAllBooks()).thenReturn(getListOfBooks());
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
+        final RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/getBooks")
                 .accept(MediaType.APPLICATION_JSON);
 
         //Get the result back
-        MvcResult result = mockMvc.perform(requestBuilder)
+        final MvcResult result = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andExpect(content().json("[\n" +
                         "{\n" +
@@ -75,12 +76,12 @@ public class BooksControllerTest {
                 , "How to be happy"
                 , 123.23)));
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
+        final RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/getBook/{bookId}", "12345")
                 .accept(MediaType.APPLICATION_JSON);
 
         //Get the result back
-        MvcResult result = mockMvc.perform(requestBuilder)
+        final MvcResult result = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         "{\n" +
@@ -94,14 +95,59 @@ public class BooksControllerTest {
                 .andReturn();
     }
 
+    @Test
+    public void getShortlistedBooksTest() throws Exception {
+        final List<ShortlistDetails> shortlistedDetails = getListOfShortlistedBooks();
+        when(shortlistedService.getAllShortListedDetailsById(123L)).thenReturn(shortlistedDetails);
+        when(booksService.getShortlistedBooksForUser(shortlistedDetails)).thenReturn(getListOfBooks());
+
+        final RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/getShortlistedBooks/{userId}", "123")
+                .accept(MediaType.APPLICATION_JSON);
+
+        //Get the result back
+        final MvcResult result = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().json("[\n" +
+                        "{\n" +
+                        "bookId: 12345,\n" +
+                        "titleId: 1,\n" +
+                        "authorId: 1,\n" +
+                        "publisherId: 1,\n" +
+                        "description: \"How to be happy\",\n" +
+                        "price: 123.23\n" +
+                        "},\n" +
+                        "{\n" +
+                        "bookId: 12346,\n" +
+                        "titleId: 2,\n" +
+                        "authorId: 2,\n" +
+                        "publisherId: 2,\n" +
+                        "description: \"How to be sad\",\n" +
+                        "price: 234.23\n" +
+                        "}\n" +
+                        "]"))
+                .andReturn();
+    }
+
     private List<Books> getListOfBooks() {
-        List<Books> list = new ArrayList<>();
-        Books firstBook = new Books(12345L, 1L, 1L, 1L, "How to be happy"
+        final List<Books> list = new ArrayList<>();
+        final Books firstBook = new Books(12345L, 1L, 1L, 1L, "How to be happy"
                 ,123.23);
-        Books secondBook = new Books(12346L, 2L, 2L, 2L, "How to be sad"
+        final Books secondBook = new Books(12346L, 2L, 2L, 2L, "How to be sad"
                 ,234.23);
         list.add(firstBook);
         list.add(secondBook);
         return list;
+    }
+
+    private List<ShortlistDetails> getListOfShortlistedBooks() {
+        final ShortlistDetails firstShortlistedDetails = new ShortlistDetails(1234900L, 123L
+                , 12345L);
+        final ShortlistDetails secondShortlistedDetails = new ShortlistDetails(1234901L, 123L
+                , 12346L);
+        final List<ShortlistDetails> shortlistDetailsList = new ArrayList<>();
+        shortlistDetailsList.add(firstShortlistedDetails);
+        shortlistDetailsList.add(secondShortlistedDetails);
+        return shortlistDetailsList;
     }
 }
