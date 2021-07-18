@@ -9,11 +9,12 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
     hibernate:
-      ddl-auto: none
-      show-sql: true
+      ddl-auto: create
     properties:
       hibernate:
+        format-sql: true
         jdbc:
           lob:
             non_contextual_creation: true
