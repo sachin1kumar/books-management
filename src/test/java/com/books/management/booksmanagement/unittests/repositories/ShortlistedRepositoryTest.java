@@ -2,7 +2,6 @@ package com.books.management.booksmanagement.unittests.repositories;
 
 import com.books.management.booksmanagement.entities.ShortlistDetails;
 import com.books.management.booksmanagement.repositories.ShortlistedRepository;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
