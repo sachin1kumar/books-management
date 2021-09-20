@@ -1,12 +1,19 @@
 package com.books.management.booksmanagement.controllers;
 
+import com.books.management.booksmanagement.entities.AuthorizationResponse;
 import com.books.management.booksmanagement.entities.Books;
 import com.books.management.booksmanagement.entities.ShortlistDetails;
+import com.books.management.booksmanagement.services.AuthorizationProxy;
 import com.books.management.booksmanagement.services.BooksService;
 import com.books.management.booksmanagement.services.ShortlistedService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,8 +28,16 @@ public class BooksController {
     @Autowired
     private ShortlistedService shortlistedService;
 
+    @Autowired
+    private AuthorizationProxy authorizationProxy;
+
+    private Logger logger = LoggerFactory.getLogger(BooksController.class);
+
     @GetMapping("/getBooks")
-    public List<Books> getAllBooks() {
+    public List<Books> getAllBooks(@RequestHeader("Authorization") String bearerToken) {
+        final AuthorizationResponse authorizationResponse = authorizationProxy.authorizeUser(bearerToken);
+        logger.error("AuthorizationResponse: "+authorizationResponse.getRoleType());
+        final String roleType = authorizationResponse.getRoleType();
         return booksService.getAllBooks();
     }
 
