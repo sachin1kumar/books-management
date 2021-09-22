@@ -19,6 +19,12 @@ spring:
           lob:
             non_contextual_creation: true
 
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: books
+
   rabbitmq:
     host: localhost
     password: guest
