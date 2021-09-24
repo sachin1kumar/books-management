@@ -5,6 +5,7 @@ import com.books.management.booksmanagement.repositories.PremiumBooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,7 +15,7 @@ public class PremiumBooksService {
     @Autowired
     private PremiumBooksRepository premiumBooksRepository;
 
-    public Optional<PremiumBooks> getPremiumBook(int id) {
+    public Optional<PremiumBooks> getPremiumBook(String  id) {
         return premiumBooksRepository.findById(id);
     }
 
@@ -26,7 +27,19 @@ public class PremiumBooksService {
         return premiumBooksRepository.save(premiumBooks);
     }
 
-    public void deletePremiumBook(int id){
+    public List<PremiumBooks> getAllPremiumBooks() {
+        return premiumBooksRepository.findAll();
+    }
+
+    public void deletePremiumBook(String id){
         premiumBooksRepository.deleteById(id);
+    }
+
+    public List<PremiumBooks> getPremiumBooksByName(String name) {
+        return premiumBooksRepository.findByBookName(name);
+    }
+
+    public List<PremiumBooks> getPremiumBooksByNameAndAuthor(String bookName, String authorName) {
+        return premiumBooksRepository.findByBookNameAndAuthorName(bookName, authorName);
     }
 }

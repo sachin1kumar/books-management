@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,18 +35,18 @@ public class PremiumBooksController {
         //Return 201 with URL including id.
         URI bookPath = ServletUriComponentsBuilder.
                 fromCurrentRequest()
-                .path("/{book_id}")
+                .path("/{_id}")
                 .buildAndExpand(savedBook.getBookId()).toUri();
         return ResponseEntity.created(bookPath).build();
     }
 
     @GetMapping("/books/{id}")
-    public Optional<PremiumBooks> getBook(@PathVariable int id) {
+    public Optional<PremiumBooks> getBook(@PathVariable String id) {
         return premiumBooksService.getPremiumBook(id);
     }
 
     @PatchMapping("/books/{id}")
-    public ResponseEntity<PremiumBooks> updateBook(@PathVariable int id, @RequestBody JsonPatch patch) {
+    public ResponseEntity<PremiumBooks> updateBook(@PathVariable String id, @RequestBody JsonPatch patch) {
         try {
             Optional<PremiumBooks> premiumBook = premiumBooksService.getPremiumBook(id);
             PremiumBooks bookPatched = applyPatchToCustomer(patch, premiumBook);
@@ -58,6 +59,11 @@ public class PremiumBooksController {
         }
     }
 
+    @GetMapping("/books")
+    public List<PremiumBooks> getAllPremiumBooks() {
+        return premiumBooksService.getAllPremiumBooks();
+    }
+
     private PremiumBooks applyPatchToCustomer(JsonPatch patch, Optional<PremiumBooks> targetBook)
             throws JsonPatchException, JsonProcessingException {
         JsonNode patched = patch.apply(objectMapper.convertValue(targetBook, JsonNode.class));
@@ -65,11 +71,21 @@ public class PremiumBooksController {
     }
 
     @DeleteMapping("/books/{id}")
-    public void deleteBook(@PathVariable int id) {
+    public void deleteBook(@PathVariable String id) {
         try {
             premiumBooksService.deletePremiumBook(id);
         } catch (EmptyResultDataAccessException exception) {
             throw new PremiumBookNotFoundException("Book not found");
         }
+    }
+
+    @GetMapping("/booksByName/{bookName}")
+    public List<PremiumBooks> getBooksByName(@PathVariable String bookName) {
+        return premiumBooksService.getPremiumBooksByName(bookName);
+    }
+
+    @GetMapping("/booksByNameAndAuthor")
+    public List<PremiumBooks> getBooksByNameAndAuthor(@RequestParam String bookName, @RequestParam String authorName) {
+        return premiumBooksService.getPremiumBooksByNameAndAuthor(bookName, authorName);
     }
 }
