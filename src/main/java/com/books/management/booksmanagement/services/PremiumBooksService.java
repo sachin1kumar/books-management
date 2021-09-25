@@ -3,6 +3,9 @@ package com.books.management.booksmanagement.services;
 import com.books.management.booksmanagement.entities.PremiumBooks;
 import com.books.management.booksmanagement.repositories.PremiumBooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,5 +44,19 @@ public class PremiumBooksService {
 
     public List<PremiumBooks> getPremiumBooksByNameAndAuthor(String bookName, String authorName) {
         return premiumBooksRepository.findByBookNameAndAuthorName(bookName, authorName);
+    }
+
+    public List<PremiumBooks> getPremiumBooksByNameOrAuthor(String bookName, String authorName) {
+        return premiumBooksRepository.findByBookNameOrAuthorName(bookName, authorName);
+    }
+
+    public List<PremiumBooks> getPremiumBooksByPagination(int pageNo, int pageSize) {
+        final Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return premiumBooksRepository.findAll(pageable).getContent();
+    }
+
+    public List<PremiumBooks> getPremiumBooksByOrder() {
+        final Sort sort = Sort.by(Sort.Direction.ASC, "bookName");
+        return premiumBooksRepository.findAll(sort);
     }
 }

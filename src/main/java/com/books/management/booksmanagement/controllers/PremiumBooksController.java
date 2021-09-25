@@ -88,4 +88,19 @@ public class PremiumBooksController {
     public List<PremiumBooks> getBooksByNameAndAuthor(@RequestParam String bookName, @RequestParam String authorName) {
         return premiumBooksService.getPremiumBooksByNameAndAuthor(bookName, authorName);
     }
+
+    @GetMapping("/booksByNameOrAuthor")
+    public List<PremiumBooks> getBooksByNameOrAuthor(@RequestParam String bookName, @RequestParam String authorName) {
+        return premiumBooksService.getPremiumBooksByNameOrAuthor(bookName, authorName);
+    }
+
+    @GetMapping("/booksByPagination")
+    public List<PremiumBooks> getBooksByPagination(@RequestParam int pageNo, @RequestParam int pageSize) {
+        return premiumBooksService.getPremiumBooksByPagination(pageNo, pageSize);
+    }
+
+    @GetMapping("/booksBySorting")
+    public List<PremiumBooks> getBooksBySorting() {
+        return premiumBooksService.getPremiumBooksByOrder();
+    }
 }
