@@ -17,4 +17,6 @@ public interface PremiumBooksRepository extends MongoRepository<PremiumBooks, St
     Page<PremiumBooks> findAll(Pageable pageable);
     //Sorting
     List<PremiumBooks> findAll(Sort sort);
+
+    List<PremiumBooks> findByRewardsListRewardName(String rewardName);
 }

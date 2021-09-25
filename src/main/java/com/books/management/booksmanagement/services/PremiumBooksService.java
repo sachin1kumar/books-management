@@ -18,7 +18,7 @@ public class PremiumBooksService {
     @Autowired
     private PremiumBooksRepository premiumBooksRepository;
 
-    public Optional<PremiumBooks> getPremiumBook(String  id) {
+    public Optional<PremiumBooks> getPremiumBook(String id) {
         return premiumBooksRepository.findById(id);
     }
 
@@ -34,7 +34,7 @@ public class PremiumBooksService {
         return premiumBooksRepository.findAll();
     }
 
-    public void deletePremiumBook(String id){
+    public void deletePremiumBook(String id) {
         premiumBooksRepository.deleteById(id);
     }
 
@@ -58,5 +58,9 @@ public class PremiumBooksService {
     public List<PremiumBooks> getPremiumBooksByOrder() {
         final Sort sort = Sort.by(Sort.Direction.ASC, "bookName");
         return premiumBooksRepository.findAll(sort);
+    }
+
+    public List<PremiumBooks> getPremiumBooksByRewardName(String rewardName) {
+        return premiumBooksRepository.findByRewardsListRewardName(rewardName);
     }
 }

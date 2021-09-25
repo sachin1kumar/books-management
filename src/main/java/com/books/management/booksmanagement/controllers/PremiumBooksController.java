@@ -103,4 +103,9 @@ public class PremiumBooksController {
     public List<PremiumBooks> getBooksBySorting() {
         return premiumBooksService.getPremiumBooksByOrder();
     }
+
+    @GetMapping("/booksByRewardName")
+    public List<PremiumBooks> getBooksByRewardName(String rewardName) {
+        return premiumBooksService.getPremiumBooksByRewardName(rewardName);
+    }
 }
