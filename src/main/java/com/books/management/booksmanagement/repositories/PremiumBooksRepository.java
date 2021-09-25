@@ -17,10 +17,12 @@ public interface PremiumBooksRepository extends MongoRepository<PremiumBooks, St
     Page<PremiumBooks> findAll(Pageable pageable);
     //Sorting
     List<PremiumBooks> findAll(Sort sort);
-
+    //Only work in case of embedded document.
     List<PremiumBooks> findByRewardsListRewardName(String rewardName);
 
     List<PremiumBooks> findByBookNameIsLike(String bookName);
 
     List<PremiumBooks> findByAuthorNameStartsWith(String authorName);
+
+    List<PremiumBooks> findByRewardsListRewardId(String authorName);
 }

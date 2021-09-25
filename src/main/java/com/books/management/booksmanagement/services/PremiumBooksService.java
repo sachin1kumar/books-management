@@ -71,4 +71,8 @@ public class PremiumBooksService {
     public List<PremiumBooks> getPremiumBooksByAuthorNameStartsWith(String authorName) {
         return premiumBooksRepository.findByAuthorNameStartsWith(authorName);
     }
+
+    public List<PremiumBooks> getPremiumBooksByRewardsListRewardId(String rewardId) {
+        return premiumBooksRepository.findByRewardsListRewardId(rewardId);
+    }
 }
