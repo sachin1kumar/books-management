@@ -113,4 +113,9 @@ public class PremiumBooksController {
     public List<PremiumBooks> getBooksByBookNameIsLike(@RequestParam String bookName) {
         return premiumBooksService.getPremiumBooksByBookNameIsLike(bookName);
     }
+
+    @GetMapping("/booksByAuthorNameStartsWith")
+    public List<PremiumBooks> getBooksByAuthorNameStartsWith(@RequestParam String authorName) {
+        return premiumBooksService.getPremiumBooksByAuthorNameStartsWith(authorName);
+    }
 }

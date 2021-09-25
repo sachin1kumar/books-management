@@ -67,4 +67,8 @@ public class PremiumBooksService {
     public List<PremiumBooks> getPremiumBooksByBookNameIsLike(String bookName) {
         return premiumBooksRepository.findByBookNameIsLike(bookName);
     }
+
+    public List<PremiumBooks> getPremiumBooksByAuthorNameStartsWith(String authorName) {
+        return premiumBooksRepository.findByAuthorNameStartsWith(authorName);
+    }
 }

@@ -20,5 +20,7 @@ public interface PremiumBooksRepository extends MongoRepository<PremiumBooks, St
 
     List<PremiumBooks> findByRewardsListRewardName(String rewardName);
 
-    List<PremiumBooks> findByBookNameIsLike(String authorName);
+    List<PremiumBooks> findByBookNameIsLike(String bookName);
+
+    List<PremiumBooks> findByAuthorNameStartsWith(String authorName);
 }
