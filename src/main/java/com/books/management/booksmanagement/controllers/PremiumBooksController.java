@@ -105,7 +105,12 @@ public class PremiumBooksController {
     }
 
     @GetMapping("/booksByRewardName")
-    public List<PremiumBooks> getBooksByRewardName(String rewardName) {
+    public List<PremiumBooks> getBooksByRewardName(@RequestParam String rewardName) {
         return premiumBooksService.getPremiumBooksByRewardName(rewardName);
+    }
+
+    @GetMapping("/booksByBookNameIsLike")
+    public List<PremiumBooks> getBooksByBookNameIsLike(@RequestParam String bookName) {
+        return premiumBooksService.getPremiumBooksByBookNameIsLike(bookName);
     }
 }

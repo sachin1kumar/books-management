@@ -63,4 +63,8 @@ public class PremiumBooksService {
     public List<PremiumBooks> getPremiumBooksByRewardName(String rewardName) {
         return premiumBooksRepository.findByRewardsListRewardName(rewardName);
     }
+
+    public List<PremiumBooks> getPremiumBooksByBookNameIsLike(String bookName) {
+        return premiumBooksRepository.findByBookNameIsLike(bookName);
+    }
 }
